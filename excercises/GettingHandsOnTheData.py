@@ -40,7 +40,7 @@ def solution1():
     ethereum = normalize_features(ys)
 
     # Show cryptocurrency prices over transaction date
-    plt.figure(0)
+    plt.figure(2)
     axis = plt.gca()
     plt.plot(bitcoin_date, bitcoin, label=("Bitcoin"))
     plt.plot(ethereum_date, ethereum, label=("Ethereum"))

@@ -55,7 +55,7 @@ def gradient_descent(x, y, a, k):
         raise NotImplementedError()
     return empirical_errors
 
-def visualize_error(X, y, learning_rates, best_alpha = None):
+def visualize_error(x, y, learning_rates, best_alpha = None):
     fig, axes = plt.subplots(1, 2,figsize=(12, 4))
 
     for learning_rate in learning_rates:

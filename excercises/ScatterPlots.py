@@ -42,7 +42,7 @@ def solution1():
     x = bitcoin
     y = ethereum
 
-    plt.figure(1, figsize=(8, 8))
+    plt.figure(3, figsize=(8, 8))
     plt.scatter(x, y)
     plt.title(r'$\bf{Figure\ 3.}$Normalized cryptocurrency prices ($x^{(i)},y^{(i)}$)')
     plt.xlabel('normalized Bitcoin prices')
