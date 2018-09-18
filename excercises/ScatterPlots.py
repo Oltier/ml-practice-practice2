@@ -39,29 +39,23 @@ def solution1():
     bitcoin = normalize_features(xs)
     ethereum = normalize_features(ys)
 
-    # Show cryptocurrency prices over transaction date
-    plt.figure(0)
+    x = bitcoin
+    y = ethereum
+
+    plt.figure(1, figsize=(8, 8))
+    plt.scatter(x, y)
+    plt.title(r'$\bf{Figure\ 3.}$Normalized cryptocurrency prices ($x^{(i)},y^{(i)}$)')
+    plt.xlabel('normalized Bitcoin prices')
+    plt.ylabel('normalized Ethereum prices')
+    plt.annotate('$(x^{(i)},y^{(i)})$', xy=(x[913], y[913]), xytext=(0.1, 0.5),
+                 arrowprops=dict(arrowstyle="->", facecolor='black'),
+                 )
     axis = plt.gca()
-    plt.plot(bitcoin_date, bitcoin, label=("Bitcoin"))
-    plt.plot(ethereum_date, ethereum, label=("Ethereum"))
-    plt.title(r'$\bf{Figure\ 2.}$ Normalized cryptocurrency prices')
-    plt.xlabel('Date')
-    plt.ylabel('Normalized price')
-    plt.xticks(rotation=20)
-    plt.legend()
+    # plt.show()
 
 
 # Tests
 solution1()
-assert len(bitcoin) == 948, "Your bitcoin data is incorrect length"
-assert len(ethereum) == 948, "Your ethereum data is incorrect length"
-assert np.max(bitcoin) == np.max(ethereum), "Incorrect max values after normalisation"
-assert np.min(bitcoin) == np.min(ethereum), "Incorrect min values after normalisation"
-
-# Run test that check that plot renders correctly. Requires plotchecker to be installed.
-pc = LinePlotChecker(axis)
-pc.assert_num_lines(2)
-pc.find_permutation('title', r'$\bf{Figure\ 2.}$ Normalized cryptocurrency prices')
-pc.find_permutation('xlabel', 'Date')
-pc.find_permutation('ylabel', 'Normalized price')
-pc.assert_labels_equal(['Bitcoin', 'Ethereum'])
+pc = ScatterPlotChecker(axis)
+assert len(pc.x_data) == 948
+assert len(pc.y_data) == 948
