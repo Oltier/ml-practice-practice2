@@ -38,7 +38,7 @@ def empirical_risk(X: np.array, y: np.array, w_opt: np.array, degree):
     N = len(X)
     M = len(X[0])
     w_opt_t = w_opt.T
-    H_poly = np.zeros((N, N))
+    H_poly = np.zeros((N, M))
     for i in range(N):
         for j in range(M):
             H_poly[i][j] = h(w_opt_t, X[i][j], degree)
