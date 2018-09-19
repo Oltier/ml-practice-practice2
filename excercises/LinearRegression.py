@@ -73,7 +73,7 @@ def linearRegression(X, y):
     return w_opt, empirical_error
 
 
-def label_vector(y):
+def label_vector(y: np.ndarray):
     # Reshape y to ensure correct behavior when doing matrix operations
     return np.reshape(y, (len(y), 1))
 
