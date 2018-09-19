@@ -20,7 +20,7 @@ def polynomialRegression(x: np.ndarray, y: np.ndarray, degree=1):
     # TODO 3. Find the minimum value of this list.
     X = feature_mapping(x, degree)
     Y = label_vector(y)
-    w_opt = fit(X, Y)
+    w_opt = fit(X, Y).flatten()
     empirical_error = empirical_risk(X, Y, w_opt, degree)
     return w_opt, empirical_error
 
@@ -35,21 +35,30 @@ def empirical_risk(X: np.array, y: np.array, w_opt: np.array, degree):
     ##        Check out numpy's dot(), mean(), power() and subtract() functions.
     # empirical_error = ...
     # YOUR CODE HERE
-    print(X)
     N = len(X)
+    M = len(X[0])
     w_opt_t = w_opt.T
-    empirical_error = np.multiply((1 / N), reduce(
-        lambda acc, curr: np.add(average_squared_error_loss(curr[0], curr[1], w_opt_t, degree), acc),
-        zip(X, y), 0))
+    H_poly = np.zeros((N, N))
+    for i in range(N):
+        for j in range(M):
+            H_poly[i][j] = h(w_opt_t, X[i][j], degree)
+
+    average_loss = np.array(list(map(lambda h_i: np.multiply((1 / N), averaged_square_error_loss(h_i, y)), H_poly)))
+
+    empirical_error = np.min(average_loss)
     return empirical_error
 
 
-def average_squared_error_loss(y_i, x_i, w_opt_t, degree):
-    return np.power(np.subtract(y_i, h(w_opt_t, x_i, degree)), 2)
+def averaged_square_error_loss(h_i, y):
+    return reduce(lambda acc, curr: np.add(squared_error_loss(curr[0], curr[1]), acc), zip(h_i, y), 0)
+
+
+def squared_error_loss(h_i, y_i):
+    return np.power(np.subtract(y_i, h_i), 2)
 
 
 def h(w: np.ndarray, x_i, degree):
-    ind = list(range(degree))
+    ind = np.arange(degree)
     return reduce(lambda acc, curr: np.add(np.multiply(curr[0], np.power(x_i, curr[1])), acc), zip(w, ind), 0)
 
 
@@ -86,14 +95,14 @@ def draw_plot(x, y, title='', degree=1):
     plt.figure(figsize=(8, 8))
     plt.scatter(x, y)
     plt.plot(x_pred, y_pred, 'r')
-    # plt.plot(x_pred, y_pred, 'r', label=("Empirical = %.4f" % empirical_error))
+    plt.plot(x_pred, y_pred, 'r', label=("Empirical = %.4f" % empirical_error))
     plt.title(title)
     plt.xlabel('Bitcoin')
     plt.ylabel('Ethereum')
     plt.xlim(0, 1)
     plt.ylim(0, 1)
     plt.legend()
-    # plt.show()
+    plt.show()
 
 
 ######### Linear regression model for x and y data #########
