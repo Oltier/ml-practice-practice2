@@ -79,7 +79,7 @@ def feature_mapping(x: np.ndarray, degree=1):
 
 
 def create_feature_map(x_i, degree=1):
-    return np.array([pow(x_i, i) for i in range(degree - 1, -1, -1)]).T
+    return np.array([pow(x_i, i) for i in range(degree, -1, -1)]).T
 
 
 def draw_plot(x, y, title='', degree=1):
@@ -102,7 +102,7 @@ def draw_plot(x, y, title='', degree=1):
     plt.xlim(0, 1)
     plt.ylim(0, 1)
     plt.legend()
-    plt.show()
+    # plt.show()
 
 
 ######### Linear regression model for x and y data #########
