@@ -39,7 +39,7 @@ def predict(X: np.array, w_opt: np.array):
 
 # Calculate empirical error of the prediction
 # return float
-def empirical_risk(X: np.array, y: np.array, w_opt: np.array, loss_function):
+def empirical_risk(X: np.array, y: np.array, w_opt: np.array):
     ### STUDENT TASK ###
     ## Compute empirical error by replacing '...' with your solution.
     ## Hints! Use X, Y and w_opt to get necessary matrices.
@@ -48,7 +48,7 @@ def empirical_risk(X: np.array, y: np.array, w_opt: np.array, loss_function):
     # YOUR CODE HERE
     N = len(X)
     w_opt_t = w_opt.T
-    empirical_error = (1 / N) * reduce(lambda acc, curr: loss_function(curr[0], curr[1], w_opt_t) + acc,
+    empirical_error = (1 / N) * reduce(lambda acc, curr: squared_error_loss(curr[0], curr[1], w_opt_t) + acc,
                                        zip(X, y), 0)
     return empirical_error
 
@@ -69,7 +69,7 @@ def linearRegression(X, y):
     X = feature_matrix(X)
     Y = label_vector(y)
     w_opt = fit(X, Y)
-    empirical_error = empirical_risk(X, Y, w_opt, squared_error_loss)
+    empirical_error = empirical_risk(X, Y, w_opt)
     return w_opt, empirical_error
 
 
@@ -92,7 +92,6 @@ def draw_plot(x, y, title=''):
     plt.legend()
     global axis
     axis = plt.gca()
-    plt.show()
 
 
 ######### Linear regression model for x and y data #########
