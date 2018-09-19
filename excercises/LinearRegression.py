@@ -48,8 +48,8 @@ def empirical_risk(X: np.array, y: np.array, w_opt: np.array):
     # YOUR CODE HERE
     N = len(X)
     w_opt_t = w_opt.T
-    empirical_error = (1 / N) * reduce(lambda acc, curr: squared_error_loss(curr[0], curr[1], w_opt_t) + acc,
-                                       zip(X, y), 0)
+    empirical_error = np.multiply((1 / N),reduce(lambda acc, curr: squared_error_loss(curr[0], curr[1], w_opt_t) + acc,
+                                       zip(X, y), 0))
     return empirical_error
 
 
@@ -92,6 +92,7 @@ def draw_plot(x, y, title=''):
     plt.legend()
     global axis
     axis = plt.gca()
+    # plt.show()
 
 
 ######### Linear regression model for x and y data #########
