@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-from matplotlib import pyplot as plt
 
 
 def normalize(x, min, max):
@@ -8,7 +7,7 @@ def normalize(x, min, max):
 
 
 def normalize_features(features):
-    return list(map(lambda i: normalize(i, np.min(features), np.max(features)), features))
+    return np.array(list(map(lambda i: normalize(i, np.min(features), np.max(features)), features)))
 
 global df_bc, df_eth, bitcoin, ethereum, axis, best_alpha
 # read in historic Bitcoin and Ethereum statistics data from the files "BTC-USD.csv" and "ETH-USD.csv"
@@ -20,8 +19,8 @@ df_eth = pd.read_csv("ETH-USD.csv", parse_dates=['Date'])
 bitcoin_date = df_bc.Date.values
 ethereum_date = df_eth.Date.values
 
-xs = df_bc.Close.values
-ys = df_eth.Close.values
+xs = np.array(df_bc.Close.values)
+ys = np.array(df_eth.Close.values)
 
 bitcoin = normalize_features(xs)
 ethereum = normalize_features(ys)

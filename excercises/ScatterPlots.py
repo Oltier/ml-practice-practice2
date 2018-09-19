@@ -11,7 +11,7 @@ def normalize(x, min, max):
 
 
 def normalize_features(features):
-    return list(map(lambda i: normalize(i, np.min(features), np.max(features)), features))
+    return np.array(list(map(lambda i: normalize(i, np.min(features), np.max(features)), features)))
 
 
 def solution1():
@@ -33,8 +33,8 @@ def solution1():
     # ethereum = [...]
 
     # YOUR CODE HERE
-    xs = df_bc.Close.values
-    ys = df_eth.Close.values
+    xs = np.array(df_bc.Close.values)
+    ys = np.array(df_eth.Close.values)
 
     bitcoin = normalize_features(xs)
     ethereum = normalize_features(ys)
