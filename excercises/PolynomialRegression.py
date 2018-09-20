@@ -1,10 +1,8 @@
-from functools import reduce
-
 from matplotlib import pyplot as plt
 
 from excercises.Globals import *
 # Linear regression model for feature mapping.
-from excercises.LinearRegression import label_vector, fit, predict
+from excercises.LinearRegression import label_vector, fit, predict, empirical_risk
 
 
 def polynomialRegression(x: np.ndarray, y: np.ndarray, degree=1):
@@ -15,51 +13,11 @@ def polynomialRegression(x: np.ndarray, y: np.ndarray, degree=1):
     # w_opt=...
     # empirical_error=...
     # YOUR CODE HERE
-    # TODO 1. Calculate for each element of X, the h^(w)(x) (I get another matrix H of the same size)
-    # TODO 2. Iterate through each element of X, Y, and H and do the equation. (H already has the values for the average squared error loss function)
-    # TODO 3. Find the minimum value of this list.
     X = feature_mapping(x, degree)
     Y = label_vector(y)
     w_opt = fit(X, Y).flatten()
-    empirical_error = empirical_risk(X, Y, w_opt, degree)
+    empirical_error = empirical_risk(X, Y, w_opt)
     return w_opt, empirical_error
-
-
-# Calculate empirical error of the prediction
-# return float
-# TODO Empirical risk is currently calculated in a bad way. It should somehow be calculated on an array and minimized
-def empirical_risk(X: np.array, y: np.array, w_opt: np.array, degree):
-    ### STUDENT TASK ###
-    ## Compute empirical error by replacing '...' with your solution.
-    ## Hints! Use X, Y and w_opt to get necessary matrices.
-    ##        Check out numpy's dot(), mean(), power() and subtract() functions.
-    # empirical_error = ...
-    # YOUR CODE HERE
-    N = len(X)
-    M = len(X[0])
-    w_opt_t = w_opt.T
-    H_poly = np.zeros((N, M))
-    for i in range(N):
-        for j in range(M):
-            H_poly[i][j] = h(w_opt_t, X[i][j], degree)
-
-    average_loss = np.array(list(map(lambda h_i: np.multiply((1 / N), averaged_square_error_loss(h_i, y)), H_poly)))
-
-    empirical_error = np.min(average_loss)
-    return empirical_error
-
-
-def averaged_square_error_loss(h_i, y):
-    return reduce(lambda acc, curr: np.add(squared_error_loss(curr[0], curr[1]), acc), zip(h_i, y), 0)
-
-
-def squared_error_loss(h_i, y_i):
-    return np.power(np.subtract(y_i, h_i), 2)
-
-
-def h(w: np.ndarray, x_i, degree):
-    ind = np.arange(degree)
-    return reduce(lambda acc, curr: np.add(np.multiply(curr[0], np.power(x_i, curr[1])), acc), zip(w, ind), 0)
 
 
 # Extract feature to higher dimensional by computing feature mapping
@@ -102,7 +60,7 @@ def draw_plot(x, y, title='', degree=1):
     plt.xlim(0, 1)
     plt.ylim(0, 1)
     plt.legend()
-    # plt.show()
+    plt.show()
 
 
 ######### Linear regression model for x and y data #########
@@ -113,6 +71,7 @@ print(empirical_error)
 assert empirical_error < 0.01
 w_opt, empirical_error = polynomialRegression([0, 1, 2, 3], [0, 1, 2, 3])
 # Because of computational rounding errors, empirical error is almost never 0
+print(empirical_error)
 assert empirical_error < 1e-30
 for i in range(0, 100):
     x_test = feature_mapping([0, 1, 2, 3], i)

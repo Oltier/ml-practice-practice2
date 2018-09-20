@@ -18,7 +18,7 @@ def fit(X: np.ndarray, y: np.ndarray):
     # Hints: Check out numpy's linalg.inv(), dot() and transpose() functions.
     # w_opt = ...
     # YOUR CODE HERE
-    w_opt = np.dot(np.dot(np.linalg.inv(np.dot(X.T, X)), X.T), y)
+    w_opt = np.linalg.multi_dot([np.linalg.inv(np.dot(X.T, X)), X.T, y])
     return w_opt
 
 
@@ -92,7 +92,7 @@ def draw_plot(x, y, title=''):
     plt.legend()
     global axis
     axis = plt.gca()
-    # plt.show()
+    plt.show()
 
 
 ######### Linear regression model for x and y data #########
