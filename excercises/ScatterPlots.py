@@ -6,12 +6,10 @@ from matplotlib import pyplot as plt
 from plotchecker import LinePlotChecker, ScatterPlotChecker
 
 
-def normalize(x, min, max):
-    return (x - min) / (max - min)
-
-
 def normalize_features(features):
-    return np.array(list(map(lambda i: normalize(i, np.min(features), np.max(features)), features)))
+    max = np.max(features)
+    min = np.min(features)
+    return (features - min) / (max - min)
 
 
 def solution1():

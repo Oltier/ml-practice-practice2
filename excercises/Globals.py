@@ -2,12 +2,11 @@ import numpy as np
 import pandas as pd
 
 
-def normalize(x, min, max):
-    return (x - min) / (max - min)
-
-
 def normalize_features(features):
-    return np.array(list(map(lambda i: normalize(i, np.min(features), np.max(features)), features)))
+    max = np.max(features)
+    min = np.min(features)
+    return (features - min) / (max - min)
+
 
 global df_bc, df_eth, bitcoin, ethereum, axis, best_alpha
 # read in historic Bitcoin and Ethereum statistics data from the files "BTC-USD.csv" and "ETH-USD.csv"
