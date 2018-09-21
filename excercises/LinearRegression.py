@@ -92,7 +92,7 @@ def draw_plot(x, y, title=''):
     plt.legend()
     global axis
     axis = plt.gca()
-    plt.show()
+    # plt.show()
 
 
 ######### Linear regression model for x and y data #########
