@@ -32,12 +32,8 @@ def feature_mapping(x: np.ndarray, degree=1):
     ##        Check out numpy's vstack(), hstack() and column_stack() functions.
     # polynomial_features = ...
     # YOUR CODE HERE
-    polynomial_features = np.array(list(map(lambda x_i: create_feature_map(x_i, degree), x)))
+    polynomial_features = (x ** np.arange(degree, -1, -1)[:, np.newaxis]).T
     return polynomial_features
-
-
-def create_feature_map(x_i, degree=1):
-    return np.array([pow(x_i, i) for i in range(degree, -1, -1)]).T
 
 
 def draw_plot(x, y, title='', degree=1):
@@ -67,11 +63,9 @@ def draw_plot(x, y, title='', degree=1):
 draw_plot(x, y, r'$\bf{Figure 5.}$Normalized cryptocurrency prices', degree=11)
 
 w_opt, empirical_error = polynomialRegression(x, y)
-print(empirical_error)
 assert empirical_error < 0.01
 w_opt, empirical_error = polynomialRegression([0, 1, 2, 3], [0, 1, 2, 3])
 # Because of computational rounding errors, empirical error is almost never 0
-print(empirical_error)
 assert empirical_error < 1e-30
 for i in range(0, 100):
     x_test = feature_mapping([0, 1, 2, 3], i)
