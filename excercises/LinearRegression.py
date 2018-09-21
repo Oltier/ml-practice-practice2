@@ -1,4 +1,3 @@
-from functools import reduce
 from matplotlib import pyplot as plt
 from numpy.core.umath_tests import inner1d
 
@@ -89,7 +88,7 @@ def draw_plot(x, y, title=''):
     plt.legend()
     global axis
     axis = plt.gca()
-    plt.show()
+    # plt.show()
 
 
 ######### Linear regression model for x and y data #########

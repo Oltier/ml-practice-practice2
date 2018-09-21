@@ -1,8 +1,6 @@
 from matplotlib import pyplot as plt
 
 from excercises.Globals import *
-
-
 # Calculate empirical error of the prediction
 from excercises.LinearRegression import feature_matrix, label_vector, empirical_risk
 

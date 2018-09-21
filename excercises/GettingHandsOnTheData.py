@@ -3,7 +3,7 @@
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
-from plotchecker import LinePlotChecker, ScatterPlotChecker
+from plotchecker import LinePlotChecker
 
 
 def normalize_features(features):
