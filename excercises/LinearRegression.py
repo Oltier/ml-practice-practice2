@@ -1,5 +1,6 @@
 from functools import reduce
 from matplotlib import pyplot as plt
+from numpy.core.umath_tests import inner1d
 
 from excercises.Globals import *
 
@@ -8,7 +9,7 @@ def feature_matrix(x: np.ndarray):
     # Generate x_i = (x_i, 1) feature matrix
     # x_i = ...
     # YOUR CODE HERE
-    x_i = np.array(list(map(lambda i: [i, 1], x)))
+    x_i = np.column_stack((x, np.ones(len(x))))
     return x_i
 
 
@@ -33,7 +34,7 @@ def predict(X: np.array, w_opt: np.array):
     ## Hint! Use X and w_opt to get necessary matrices.
     # y_pred ...
     # YOUR CODE HERE
-    y_pred = np.array(list(map(lambda x: w_opt.T.dot(x), X)))
+    y_pred = inner1d(w_opt.T, X)
     return y_pred
 
 
@@ -48,13 +49,9 @@ def empirical_risk(X: np.array, y: np.array, w_opt: np.array):
     # YOUR CODE HERE
     N = len(X)
     w_opt_t = w_opt.T
-    empirical_error = np.multiply((1 / N),reduce(lambda acc, curr: squared_error_loss(curr[0], curr[1], w_opt_t) + acc,
-                                       zip(X, y), 0))
+    squared_error = ((y - inner1d(w_opt_t, X)[:, np.newaxis]) ** 2).sum(axis=0)
+    empirical_error = squared_error / N
     return empirical_error
-
-
-def squared_error_loss(x_i, y_i, w_opt_t):
-    return np.power(np.subtract(y_i, np.dot(w_opt_t, x_i)), 2)
 
 
 def linearRegression(X, y):
@@ -92,7 +89,7 @@ def draw_plot(x, y, title=''):
     plt.legend()
     global axis
     axis = plt.gca()
-    # plt.show()
+    plt.show()
 
 
 ######### Linear regression model for x and y data #########
